@@ -1,6 +1,8 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const useCreateApi = () => {
+  const navigate = useNavigate();
   const api = axios.create({
     baseURL: "http://localhost:4000",
     withCredentials: true,
@@ -24,7 +26,14 @@ const useCreateApi = () => {
       }
       return response;
     },
-    (err) => Promise.reject(err)
+    (err) => {
+      if (err.response?.status === 401 || err.response?.status === 403) {
+        localStorage.removeItem("csrfToken");
+        navigate("/login");
+        // window.location.href = "/login";
+      }
+      return Promise.reject(err);
+    }
   );
 
   return api;

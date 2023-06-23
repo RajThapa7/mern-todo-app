@@ -1,10 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
 import { AxiosInstance } from "axios";
 import useCreateApi from "../useCreateApi";
+import { useQuery } from "@tanstack/react-query";
 
-const getTodos = async (api: AxiosInstance) => {
-  const result = await api.get("/todo");
-  return result;
+export interface ITodos {
+  _id: string;
+  title: string;
+  body: string;
+  isActive: boolean;
+}
+const getTodos = async (api: AxiosInstance): Promise<ITodos[]> => {
+  const result = await api.get(`/todo`);
+  return result.data;
 };
 
 const useFetchTodos = () => {

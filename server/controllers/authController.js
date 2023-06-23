@@ -65,4 +65,9 @@ const signupPost = async (req, res) => {
   }
 };
 
-module.exports = { loginPost, signupPost };
+const logout = (req, res) => {
+  res.cookie("accessToken", "");
+  res.json({ msg: "Logged out successfully!" });
+};
+
+module.exports = { loginPost, signupPost, logout };

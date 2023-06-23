@@ -49,6 +49,17 @@ const editTodo = async (req, res) => {
   }
 };
 
+const deleteAllTodos = async (req, res) => {
+  const userId = res.locals.userId;
+  try {
+    await Todo.deleteMany({ userId });
+    res.json({ msg: "All items Successfully deleted" });
+  } catch (error) {
+    const errorMessage = errorHandler(error);
+    res.status(400).json(errorMessage);
+  }
+};
+
 const deleteTodo = async (req, res) => {
   const { id } = req.params;
   try {
@@ -60,4 +71,11 @@ const deleteTodo = async (req, res) => {
   }
 };
 
-module.exports = { getAllTodos, getTodo, createTodo, editTodo, deleteTodo };
+module.exports = {
+  getAllTodos,
+  getTodo,
+  createTodo,
+  editTodo,
+  deleteAllTodos,
+  deleteTodo,
+};

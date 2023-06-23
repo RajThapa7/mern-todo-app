@@ -22,6 +22,7 @@ export default function Login() {
     loginMutation.mutate(formData, {
       onSuccess: (data) => {
         console.log(data, "success");
+        window.location.href = "/todos";
       },
       onError: (error) => {
         console.log(error, "error");

@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useSignup from "../api/hooks/useSignup";
 
 export default function Signup() {
@@ -18,12 +18,14 @@ export default function Signup() {
   });
 
   const signupMutation = useSignup();
+  const navigate = useNavigate();
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     isAgreed &&
       signupMutation.mutate(formData, {
         onSuccess: (data) => {
+          navigate("/todos");
           console.log("success", data);
         },
         onError: (err) => {
