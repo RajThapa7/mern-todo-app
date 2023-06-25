@@ -26,7 +26,7 @@ export default function AddTodoForm({ open, setOpen }: IModal) {
   const [formData, setFormData] = useState({
     title: "",
     body: "",
-    isActive: false,
+    isActive: true,
   });
 
   const addTodoMutation = useAddTodo();
@@ -86,6 +86,7 @@ export default function AddTodoForm({ open, setOpen }: IModal) {
                 <Checkbox
                   label="is active"
                   name="isActive"
+                  checked={formData.isActive}
                   onChange={(e) =>
                     setFormData({
                       ...formData,

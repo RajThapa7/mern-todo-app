@@ -7,7 +7,6 @@ import {
   Card,
   IconButton,
   Typography,
-  Checkbox,
   Button,
 } from "@material-tailwind/react";
 import { TrashIcon } from "@heroicons/react/24/solid";
@@ -92,14 +91,6 @@ export default function Todos() {
             </p>
             {item.isActive && (
               <ListItemSuffix className="inline-flex">
-                <Checkbox
-                  id="vertical-list-react"
-                  ripple={false}
-                  className="hover:before:opacity-0"
-                  containerProps={{
-                    className: "p-2 mt-[1.2px]",
-                  }}
-                />
                 <IconButton
                   variant="text"
                   color="blue-gray"

@@ -16,9 +16,6 @@ interface IModal {
 
 export default function ViewTodo({ open, setOpen }: IModal) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const id = searchParams.get("id") as string;
-
-  console.log(id, "id");
 
   const handleOpen = () => {
     setOpen((prev) => !prev);

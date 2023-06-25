@@ -1,4 +1,4 @@
-import React, { Dispatch, SyntheticEvent, useState } from "react";
+import React, { Dispatch, SyntheticEvent, useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -13,6 +13,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import useEditTodo from "../api/hooks/useEditTodo";
 import { useSearchParams } from "react-router-dom";
+import useFetchSingleTodo from "../api/hooks/useFetchSingleTodo";
 
 interface IModal {
   open: boolean;
@@ -28,11 +29,23 @@ export default function EditTodoForm({ open, setOpen }: IModal) {
     setSearchParams({});
   };
 
+  const todo = useFetchSingleTodo(open, setOpen);
+
   const [formData, setFormData] = useState({
-    title: "",
-    body: "",
-    isActive: false,
+    title: todo.data?.title,
+    body: todo.data?.body,
+    isActive: todo.data?.isActive,
   });
+
+  useEffect(() => {
+    setFormData({
+      title: todo.data?.title,
+      body: todo.data?.body,
+      isActive: todo.data?.isActive,
+    });
+  }, [todo.data?.body, todo.data?.isActive, todo.data?.title]);
+
+  console.log(todo, formData);
 
   const editTodoMutation = useEditTodo();
 
@@ -77,6 +90,7 @@ export default function EditTodoForm({ open, setOpen }: IModal) {
                 size="lg"
                 required
                 name="title"
+                value={formData.title}
                 onChange={(e) =>
                   setFormData({ ...formData, [e.target.name]: e.target.value })
                 }
@@ -86,6 +100,7 @@ export default function EditTodoForm({ open, setOpen }: IModal) {
                 size="lg"
                 required
                 name="body"
+                value={formData.body}
                 onChange={(e) =>
                   setFormData({ ...formData, [e.target.name]: e.target.value })
                 }
@@ -94,6 +109,7 @@ export default function EditTodoForm({ open, setOpen }: IModal) {
                 <Checkbox
                   label="is active"
                   name="isActive"
+                  checked={formData.isActive}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
